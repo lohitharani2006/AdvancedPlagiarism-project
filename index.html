@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smart Plagiarism Tracker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<h1>Smart Plagiarism Evolution Tracker</h1>
+
+<form action="/check" method="post" enctype="multipart/form-data">
+
+    <h3>Enter Text</h3>
+    <textarea name="text" rows="8" placeholder="Paste your text here..."></textarea>
+
+    <h3>OR Upload File (.txt)</h3>
+    <input type="file" name="file"><br><br>
+
+    <button type="submit">Check Plagiarism</button>
+
+</form>
+
+{% if percentage is defined %}
+    <h2>Plagiarism: {{ percentage }}%</h2>
+
+    {% if percentage > 70 %}
+        <p style="color:red;">High plagiarism ⚠️</p>
+    {% elif percentage > 40 %}
+        <p style="color:orange;">Moderate plagiarism</p>
+    {% else %}
+        <p style="color:green;">Low plagiarism ✅</p>
+    {% endif %}
+{% endif %}
+
+{% if suggestions %}
+<h3>Suggestions to Reduce Plagiarism:</h3>
+<ul>
+    {% for s in suggestions %}
+        <li>{{ s }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+</body>
+</html>
